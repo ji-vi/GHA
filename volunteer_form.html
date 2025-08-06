@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-light custom-navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+        <img src="images/logo.png" alt="" width="40" height="28" class="d-inline-block align-text-top">
+        Green Hope Alliance
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+        <a class="nav-link" href="volunteer_form.html">Volunteer Form</a>
+        <a class="nav-link" href="/BKP assessment1/about_us.html">About Us</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="con my-5">
+  <h1 class="mb-4 text-center">Green Hope Alliance Volunteer Form</h1>
+  <form id="volunteerForm" class="mx-auto" style="max-width: 600px;" method="POST" action="https://script.google.com/macros/s/AKfycbxYGbkstqc5nNCpp7ulC56duIgtw3kweInP6ajFV2l6K_DG-YJbrAnjIoLsIGsKUib3/exec">
+    <div class="mb-3">
+      <label for="fullName" class="form-label">Full Name *</label>
+      <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Your full name" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email *</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone</label>
+      <input type="tel" class="form-control" id="phone" name="phone" placeholder="Optional phone number" />
+    </div>
+
+    <div class="mb-3">
+      <label for="availability" class="form-label">Availability</label>
+      <input type="text" class="form-control" id="availability" name="availability" placeholder="Days/hours available" />
+    </div>
+
+    <div class="mb-3">
+      <label for="skills" class="form-label">Skills</label>
+      <input type="text" class="form-control" id="skills" name="skills" placeholder="Your skills or expertise" />
+    </div>
+
+    <div class="mb-3">
+      <label for="interests" class="form-label">Interests</label>
+      <input type="text" class="form-control" id="interests" name="interests" placeholder="What are you interested in?" />
+    </div>
+
+    <div class="mb-3">
+      <label for="notes" class="form-label">Additional Notes</label>
+      <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Anything else you'd like to share"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Submit</button>
+  </form>
+</div>
+
+<footer class="text-center text-lg-start text-muted" style="background-color: #DDF6D2;">
+  <div class="text-center p-4">
+    © 2023 Green Hope Alliance. All rights reserved.
+</footer>
+
+<script>
+document.getElementById('volunteerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const formDataObj = new FormData(form);  // ✅ make sure this is not shadowed
+
+  const jsonData = {};
+
+  // Convert FormData to JSON
+  for (const [key, value] of formDataObj.entries()) {
+    jsonData[key] = value;
+  }
+
+  fetch('https://script.google.com/macros/s/AKfycbxYGbkstqc5nNCpp7ulC56duIgtw3kweInP6ajFV2l6K_DG-YJbrAnjIoLsIGsKUib3/exec', {
+    method: 'POST',
+    // mode: 'no-cors', 
+    body: JSON.stringify(jsonData),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+  if (!response.ok) {
+    return response.text().then(text => {
+      console.error("Server Error:", text);
+      alert("Submission failed: " + text);
+    });
+  } else {
+    return response.json().then(data => {
+      console.log("Server response:", data);
+      alert("Submitted successfully!");
+    });
+  }
+})
+.catch(error => {
+  console.error("Fetch Error:", error);
+  alert("Submission failed due to a network error.");
+});
+
+});
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
