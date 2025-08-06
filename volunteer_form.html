@@ -76,49 +76,6 @@
     © 2023 Green Hope Alliance. All rights reserved.
 </footer>
 
-<script>
-document.getElementById('volunteerForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  const form = e.target;
-  const formDataObj = new FormData(form);  // ✅ make sure this is not shadowed
-
-  const jsonData = {};
-
-  // Convert FormData to JSON
-  for (const [key, value] of formDataObj.entries()) {
-    jsonData[key] = value;
-  }
-
-  fetch('https://script.google.com/macros/s/AKfycbxYGbkstqc5nNCpp7ulC56duIgtw3kweInP6ajFV2l6K_DG-YJbrAnjIoLsIGsKUib3/exec', {
-    method: 'POST',
-    // mode: 'no-cors', 
-    body: JSON.stringify(jsonData),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(response => {
-  if (!response.ok) {
-    return response.text().then(text => {
-      console.error("Server Error:", text);
-      alert("Submission failed: " + text);
-    });
-  } else {
-    return response.json().then(data => {
-      console.log("Server response:", data);
-      alert("Submitted successfully!");
-    });
-  }
-})
-.catch(error => {
-  console.error("Fetch Error:", error);
-  alert("Submission failed due to a network error.");
-});
-
-});
-</script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
